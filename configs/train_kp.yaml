@@ -1,0 +1,87 @@
+checkpoint_name: 'keypoint'
+epoch: 5
+epoch_step: 1000
+lr_decay_step: 4
+lr_decay_factor: 0.1
+log_freq: 200
+grad_clip: False
+clip_norm: 10.
+test_kp: True
+
+optimal_modules: ['localheader']
+optimal_lrs: [1.e-3]
+optimizer: SGD 
+
+load_path: ckpts/descriptor/010
+
+model: 'PoSFeat'
+model_config: 
+    backbone: None
+    backbone_config: None
+    localheader: None
+    localheader_config: None
+
+data: 'MegaDepth_SIFT'
+data_config_train:
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    prune_kp: False
+    num_pts: 2000
+    batch_size: 6
+    workers: 6
+    random_percent: 0.5
+    rot_thr: 80
+data_config_hpatches:
+    data_path: '/home/kunbpc/data/kunb/hpatches/hpatches-sequences-release'
+    prune_kp: False
+    num_pts: 500 # not used
+    batch_size: 1
+    workers: 4
+    detector: 'generate_kpts_single_noavg'
+    detector_config:
+      num_pts: 8192
+      stable: True
+      use_nms: True # softnms, True, False
+      nms_radius: 1
+      thr: False
+      thr_mod: max
+no_cuda: ['name1', 'name2']
+
+val_config:
+  data_config_val:
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    prune_kp: False
+    shuffle: True
+    num_pts: 1024
+    batch_size: 8
+    workers: 1
+    random_percent: 0
+    rot_thr: 360
+  detector: 'generate_kpts_single' # sift or something else
+  detector_config:
+    num_pts: 1024
+    stable: True
+    use_nms: True 
+    nms_radius: 1
+    thr: False 
+  loss_distance: 'cos' 
+  vis_topk: 50
+  vis_err_thr: 5
+
+losses: ['DiskLoss'] 
+losses_weight: [1]
+tb_component: ['reinforce', 'kp_penalty']
+
+DiskLoss_config:
+  grid_size: 8
+  loss_distance: 'cos'
+  temperature_base: 60
+  temperature_max: 60
+  epipolar_reward: constant_reward # constant_reward, dynamic_reward
+  reward_config:
+    reward_thr: 2
+    rescale_thr: False
+  cor_detach: True
+  good_reward: 1
+  bad_reward: -0.25
+  kp_penalty: -0.001
+  match_grad: False

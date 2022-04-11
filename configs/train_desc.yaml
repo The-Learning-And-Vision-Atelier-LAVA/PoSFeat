@@ -1,0 +1,105 @@
+checkpoint_name: 'descriptor'
+epoch: 10
+epoch_step: 10000
+lr_decay_step: 9
+lr_decay_factor: 0.1
+log_freq: 1000
+grad_clip: False
+clip_norm: 10.
+test_kp: False # if False, test with sift on hpatches
+
+optimal_modules: ['backbone']
+optimal_lrs: [1.e-4]
+optimizer: Adam # SGD Adam
+
+# the model settings
+model: 'PoSFeat'
+model_config: 
+    backbone: 'ResUNet'
+    backbone_config:
+        encoder: 'resnet50'
+        pretrained: True
+        coarse_out_ch: 128
+        fine_out_ch: 128
+    localheader: 'KeypointDet'
+    localheader_config:
+        in_channels: 192 # 128 for localmap 64 for localmap_small
+        prior: 'identity' # ASL_Peak D2 identity
+        act: 'Softplus'
+    align_local_grad: False
+    local_input_elements: ['local_map', 'local_map_small']
+    local_with_img: True
+
+# the data settings
+data: 'MegaDepth_SIFT' # the images in megadepth_caps have been resized to 640x480, therefore, we don't need to resize the images 
+data_config_train:
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    prune_kp: False
+    num_pts: 2000
+    batch_size: 8
+    workers: 6
+    random_percent: 0.5
+    rot_thr: 80
+data_config_hpatches:
+    data_path: '/home/kunbpc/data/kunb/hpatches/hpatches-sequences-release'
+    prune_kp: False
+    num_pts: 500 # not used
+    batch_size: 1
+    workers: 4
+    detector: 'generate_kpts_single_noavg'
+    detector_config:
+      num_pts: 8192
+      stable: True
+      use_nms: True # softnms, True, False
+      nms_radius: 1
+      thr: False
+      thr_mod: max
+no_cuda: ['name1', 'name2']
+
+val_config:
+  data_config_val:
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    prune_kp: False
+    shuffle: True
+    num_pts: 1024
+    batch_size: 8
+    workers: 1
+    random_percent: 0
+    rot_thr: 360
+  detector: 'sift' # sift or something else, e.g., generate_kpts_single2
+  loss_distance: 'cos' 
+  vis_topk: 50
+  vis_err_thr: 5
+
+# the losses settings
+preprocess_train: 'Preprocess_Line2Window'
+preprocess_train_config:
+  kps_generator: 'generate_kpts_regular_grid_random'
+  kps_generator_config:
+    grid_size: 16 # the grid size on fine feature map
+    map_init: 'identity' # SSIM D2 ASL_Peak identity
+    keep_spatial: True
+    random_select: 'random'  # random for refinement with kpmap guidance, regular_random for initialization
+  window_size: 0.1
+  loss_distance: 'cos'
+  use_nn_grid: False # for compute std_grid, and when not use line search, locate center
+  use_line_search: True
+  line_search_config:
+    line_step: 100
+    use_nn: True
+    loc_rand: True
+  temperature_base: 60
+  temperature_max: 60
+  # linelen_thr: 0
+  # regular_grid_points: False #if false, use sift keypoints
+
+losses: ['EpipolarLoss_full'] 
+losses_weight: [1]
+tb_component: ['loss_w1', 'loss_w2', 'percent_w']
+
+EpipolarLoss_full_config:
+  grid_cost_thr: 0.5
+  win_cost_thr: 0.1
+  use_std_as_weight: True
+  weight_grid: 0
+  weight_window: 1

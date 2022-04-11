@@ -1,0 +1,34 @@
+output_root: 'hpatches/PoSFeat_mytrain'
+postfix: 'PoSFeat_mytrain'
+load_path: './ckpts/keypoint/005'
+
+loss_distance: 'cos'
+output_desc: True
+output_img: False
+
+model: 'PoSFeat'
+model_config: 
+    backbone: None
+    backbone_config: None
+    localheader: None
+    localheader_config: None
+
+data: 'HPatch_SIFT' # the images in megadepth_caps have been resized to 640x480, therefore, we don't need to resize the images 
+data_config_extract:
+    data_path: '/home/kunbpc/data/kunb/hpatches/hpatches-sequences-release'
+    prune_kp: True
+    num_pts: 5000
+    batch_size: 1
+    workers: 4
+
+local_thr: 0.99 # only used in save_img, this is a percent thr instead of  a abs thr
+
+use_sift: False
+detector: 'generate_kpts_single'
+detector_config:
+    num_pts: 8192
+    stable: True
+    use_nms: True # softnms, True, False
+    nms_radius: 1
+    thr: 0.9 # False or a float
+    thr_mod: abs # max mean abs

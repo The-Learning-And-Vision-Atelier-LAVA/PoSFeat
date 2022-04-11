@@ -1,0 +1,42 @@
+# extractor config
+output_root: 'ETH/PoSFeat_mytrain'
+postfix: 'PoSFeat_mytrain'
+load_path: './ckpts/keypoint/005'
+
+loss_distance: 'cos'
+output_desc: True
+output_img: False
+
+model: 'PoSFeat'
+model_config: 
+    backbone: None
+    backbone_config: None
+    localheader: None
+    localheader_config: None
+
+
+data: 'ETH_LFB' 
+data_config_extract:
+    data_path: '/home/kunbpc/data/kunb/ETH-local-feature'
+    subfolder: 'South-Building' # Alamo ArtsQuad_dataset Fountain 
+                       # Gendarmenmarkt Herzjesu Madrid_Metropolis 
+                       # Oxford5k Roman_Forum South-Building Tower_of_London
+    batch_size: 1
+    workers: 4
+local_thr: 0.99 # only used in save image
+
+use_sift: False
+detector: 'generate_kpts_single'
+detector_config:
+    num_pts: 20480
+    stable: True
+    use_nms: True # softnms, True, False
+    nms_radius: 3
+    thr: 0.9 # False or a float
+    thr_mod: abs # max mean abs
+
+# reconstruction config
+colmap_path: /home/kunbpc/Installed/colmap/build/src/exe
+matcher: 'mutual_nn_ratio_matcher' # mutual_nn_matcher mutual_nn_ratio_matcher
+matcher_config:
+  ratio: 0.75
