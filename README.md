@@ -69,7 +69,7 @@ With `use_sift: True` in the config file, the output would be the sift keypoint 
 
 **(2) HPatches**
 
-We follow the evalutaion protocal proposed by [D2-Net](https://github.com/mihaidusmanu/d2-net/tree/master/hpatches_sequences) (please follow the introduction in D2-Net to download and modify the dataset), and modify the input codes for convenience. The result will be saved in [evaluations/hpatches/cache](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/hpatches/caches) as a `.npy` file, and we provide the results of several methods in the cache folder. Note that, you should mannuly remove the high resolution scenes in the original dataset.
+We follow the evalutaion protocal proposed by [D2-Net](https://github.com/mihaidusmanu/d2-net/tree/master/hpatches_sequences) (please follow the introduction in D2-Net to download and modify the dataset), and modify the input codes for convenience. The result will be saved in [evaluations/hpatches/cache](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/tree/main/evaluations/hpatches/cache) as a `.npy` file, and we provide the results of several methods in the cache folder. Note that, you should mannuly remove the high resolution scenes in the original dataset.
 
 Run the command
 ```
@@ -122,7 +122,7 @@ data_path_root_aachen
    └── image_pairs_to_match_v1_1.txt
 ```
 
-If you do not want to manage the data, you should mannuly modify the datapath settings in [evauluations/aachen/reconstruct_pipeline.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evauluations/aachen/reconstruct_pipeline.py) (Line 330-341) and [evauluations/aachen/reconstruct_pipeline_v1_1.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evauluations/aachen/reconstruct_pipeline_v1_1.py) (Line 316-327).
+If you do not want to manage the data, you should mannuly modify the datapath settings in [evauluations/aachen/reconstruct_pipeline.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/aachen/reconstruct_pipeline.py) (Line 329-339) and [evauluations/aachen/reconstruct_pipeline_v1_1.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/aachen/reconstruct_pipeline_v1_1.py) (Line 319-330).
 
 Before evaluation, we should extract the features first,
 ```
@@ -189,7 +189,7 @@ cd ./evaluations/ETH_local_feature
 python reconstruction_pipeline.py --config ../../configs/extract_ETH.yaml
 ```
 
-##BibeTeX
+## BibeTeX
 
 If you use this code in your project, please cite the following paper
 ```
