@@ -17,7 +17,7 @@ Down the preprocessed subset of MegaDepth from [CAPS](https://github.com/qianqia
 
 **(2) Train the description net**
 
-To start the description net training, please mannuly modify the `data_path` of `data_config_train` in [config/train_desc.yaml](./config/rain_desc.yaml). 
+To start the description net training, please mannuly modify the `data_path` of `data_config_train` in [config/train_desc.yaml](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/configs/train_desc.yaml). 
 
 Because of unknown reason, the multi-gpu training is really slow, so we should set single GPU available
 ```
@@ -62,14 +62,14 @@ We depend on the [path](https://path.readthedocs.io/en/latest/index.html) packag
 ## Evaluation
 **(1) Feature extraction**
 
-Using the `extract.py` can extract PoSFeat features. This file works with the [managers/extractor.py](./managers/extractor.py), and users should provide a config file containing the datapath, detector config. The output can be `.npz` or `.h5`.
+Using the `extract.py` can extract PoSFeat features. This file works with the [managers/extractor.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/managers/extractor.py), and users should provide a config file containing the datapath, detector config. The output can be `.npz` or `.h5`.
 
 With `use_sift: True` in the config file, the output would be the sift keypoint with PoSFeat descriptor. The SIFT keypoints are detected with the OpenCV default settings in the dataloader.
 
 
 **(2) HPatches**
 
-We follow the evalutaion protocal proposed by [D2-Net](https://github.com/mihaidusmanu/d2-net/tree/master/hpatches_sequences) (please follow the introduction in D2-Net to download and modify the dataset), and modify the input codes for convenience. The result will be saved in [evaluations/hpatches/cache](./evaluations/hpatches/caches) as a `.npy` file, and we provide the results of several methods in the cache folder. Note that, you should mannuly remove the high resolution scenes in the original dataset.
+We follow the evalutaion protocal proposed by [D2-Net](https://github.com/mihaidusmanu/d2-net/tree/master/hpatches_sequences) (please follow the introduction in D2-Net to download and modify the dataset), and modify the input codes for convenience. The result will be saved in [evaluations/hpatches/cache](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/hpatches/caches) as a `.npy` file, and we provide the results of several methods in the cache folder. Note that, you should mannuly remove the high resolution scenes in the original dataset.
 
 Run the command
 ```
@@ -77,13 +77,13 @@ export CUDA_VISIBLE_DEVICES=0
 python extract.py --config ./configs/extract_hpatches.yaml
 ```
 
-Then turn to the [evaluations/hpatches](./evaluations/hpatches) folder, modify the path in the evaluation script (if you donnot modify the script, there is only a PoSFeat_CVPR cache result) and run the script
+Then turn to the [evaluations/hpatches](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/hpatches) folder, modify the path in the evaluation script (if you donnot modify the script, there is only a PoSFeat_CVPR cache result) and run the script
 ```
 cd ./evaluations/hpatches
 python evaluation.py
 ```
 
-When finishing the evaluation, you will get pictures of curves and a `.txt` file containing the quantitative results in the [evaluations/hpatches](./evaluations/hpatches) folder.
+When finishing the evaluation, you will get pictures of curves and a `.txt` file containing the quantitative results in the [evaluations/hpatches](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evaluations/hpatches) folder.
 
 <p align="center"><img src="./imgs/hpatches_res.png" width="100%"> </p>
 
@@ -122,7 +122,7 @@ data_path_root_aachen
    └── image_pairs_to_match_v1_1.txt
 ```
 
-If you do not want to manage the data, you should mannuly modify the datapath settings in [evauluations/aachen/reconstruct_pipeline.py](./evauluations/aachen/reconstruct_pipeline.py) (Line 330-341) and [evauluations/aachen/reconstruct_pipeline_v1_1.py](./evauluations/aachen/reconstruct_pipeline_v1_1.py) (Line 316-327).
+If you do not want to manage the data, you should mannuly modify the datapath settings in [evauluations/aachen/reconstruct_pipeline.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evauluations/aachen/reconstruct_pipeline.py) (Line 330-341) and [evauluations/aachen/reconstruct_pipeline_v1_1.py](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/evauluations/aachen/reconstruct_pipeline_v1_1.py) (Line 316-327).
 
 Before evaluation, we should extract the features first,
 ```

@@ -40,20 +40,6 @@ data_config_train:
     workers: 6
     random_percent: 0.5
     rot_thr: 80
-data_config_hpatches:
-    data_path: '/home/kunbpc/data/kunb/hpatches/hpatches-sequences-release'
-    prune_kp: False
-    num_pts: 500 # not used
-    batch_size: 1
-    workers: 4
-    detector: 'generate_kpts_single_noavg'
-    detector_config:
-      num_pts: 8192
-      stable: True
-      use_nms: True # softnms, True, False
-      nms_radius: 1
-      thr: False
-      thr_mod: max
 no_cuda: ['name1', 'name2']
 
 val_config:

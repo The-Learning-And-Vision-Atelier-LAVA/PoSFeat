@@ -48,14 +48,6 @@ class Trainer(ABC):
         self.save_root = Path('./ckpts/{}'.format(self.config['checkpoint_name']))
         self.logfile = self.save_root/'logging_file.txt'
 
-        if 'data_config_hpatches' in list(self.config.keys()):
-            self.hpatches_root = self.save_root/'hpatches'
-            self.hpatches_desc = self.hpatches_root/'desc'
-            self.hpatches_detector = getattr(putils, self.config['data_config_hpatches']['detector'])
-            self.hpatches_best_score = None
-        else:
-            self.hpatches_root = False
-
         ## update the model config if there is a checkpoint
         ## 如果存在checkpoint，则根据checkpoint中的模型配置来更新配置文件，确保参数正确载入
         ckpt_path = None
@@ -152,11 +144,6 @@ class Trainer(ABC):
         with open(self.save_root/'val_data.npz', 'wb') as out_f:
             np.savez(out_f, val_data=self.val_data)
 
-        if self.hpatches_root:
-            hpatches_dataset = datasets.HPatch_SIFT(configs=self.config['data_config_hpatches'])
-            self.hpatches_loder = torch.utils.data.DataLoader(hpatches_dataset, batch_size=self.config['data_config_hpatches']['batch_size'],
-                shuffle=False, num_workers=self.config['data_config_hpatches']['workers'],collate_fn=self.my_collate)
-
     def my_collate(self, batch):
         ''' Puts each data field into a tensor with outer dimension batch size '''
         batch = list(filter(lambda b: b is not None, batch))
@@ -199,9 +186,6 @@ class Trainer(ABC):
             self.logfile.touch()
 
             self.writer = SummaryWriter(self.save_root)
-            if self.hpatches_root:
-                self.hpatches_root.makedirs_p()
-                self.hpatches_desc.makedirs_p()
 
         self.logger = logging.getLogger()
 
