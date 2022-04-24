@@ -24,8 +24,6 @@ class MegaDepth_superpoint(Dataset):
                                                  transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                                                       std=(0.229, 0.224, 0.225)),
                                                  ])
-            self.data_dict = np.load(Path(configs['data_path'])/'class_dict.npy', allow_pickle=True).item()
-            self.data_dict_inv = np.load(Path(configs['data_path'])/'class_dict_inv.npy', allow_pickle=True).item()
         else:
             self.transform = transforms.Compose([transforms.ToTensor(),
                                                  transforms.Normalize(mean=(0.485, 0.456, 0.406),
@@ -47,7 +45,7 @@ class MegaDepth_superpoint(Dataset):
     def read_img_cam(self):
         images = {}
         Image = collections.namedtuple(
-            "Image", ["name", "w", "h", "fx", "fy", "cx", "cy", "rvec", "tvec", "class_label"])
+            "Image", ["name", "w", "h", "fx", "fy", "cx", "cy", "rvec", "tvec"])
         for scene_id in os.listdir(self.root):
             densefs = [f for f in os.listdir(os.path.join(self.root, scene_id))
                        if 'dense' in f and os.path.isdir(os.path.join(self.root, scene_id, f))]
@@ -72,11 +70,11 @@ class MegaDepth_superpoint(Dataset):
                             if self.is_train:
                                 label = self.data_dict[scene_id]
                                 images[img_path] = Image(
-                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=label
+                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T
                                 )
                             else:
                                 images[img_path] = Image(
-                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=1
+                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T
                                 )
         return images 
 
@@ -228,8 +226,7 @@ class MegaDepth_superpoint(Dataset):
                'intrinsic1': intrinsic1,
                'intrinsic2': intrinsic2,
                'coord1': coord1,
-               'coord2': coord2,
-               'class_label': im1_meta.class_label}
+               'coord2': coord2}
 
         return out
 
@@ -248,8 +245,6 @@ class MegaDepth_SIFT(Dataset):
                                                  transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                                                       std=(0.229, 0.224, 0.225)),
                                                  ])
-            self.data_dict = np.load(Path(configs['data_path'])/'class_dict.npy', allow_pickle=True).item()
-            self.data_dict_inv = np.load(Path(configs['data_path'])/'class_dict_inv.npy', allow_pickle=True).item()
         else:
             self.transform = transforms.Compose([transforms.ToTensor(),
                                                  transforms.Normalize(mean=(0.485, 0.456, 0.406),
@@ -271,7 +266,7 @@ class MegaDepth_SIFT(Dataset):
     def read_img_cam(self):
         images = {}
         Image = collections.namedtuple(
-            "Image", ["name", "w", "h", "fx", "fy", "cx", "cy", "rvec", "tvec", "class_label"])
+            "Image", ["name", "w", "h", "fx", "fy", "cx", "cy", "rvec", "tvec"])
         for scene_id in self.root.listdir():
             if not scene_id.isdir():
                 continue
@@ -295,15 +290,9 @@ class MegaDepth_SIFT(Dataset):
                             cx, cy = float(elems[5]), float(elems[6])
                             R = np.array(elems[7:16])
                             T = np.array(elems[16:19])
-                            if self.is_train:
-                                label = self.data_dict[scene_id.name]
-                                images[img_path] = Image(
-                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=label
-                                )
-                            else:
-                                images[img_path] = Image(
-                                    name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T, class_label=1
-                                )
+                            images[img_path] = Image(
+                                name=image_name, w=w, h=h, fx=fx, fy=fy, cx=cx, cy=cy, rvec=R, tvec=T
+                            )
         return images 
 
     def read_pairs(self):
@@ -497,8 +486,7 @@ class MegaDepth_SIFT(Dataset):
                'coord1': coord1,
                'coord2': coord2,
                'name1':im1_meta.name,
-               'name2':im2_meta.name,
-               'class_label': im1_meta.class_label}
+               'name2':im2_meta.name}
 
         return out
 

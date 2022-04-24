@@ -33,7 +33,7 @@ model_config:
 # the data settings
 data: 'MegaDepth_SIFT' # the images in megadepth_caps have been resized to 640x480, therefore, we don't need to resize the images 
 data_config_train:
-    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps_(copy)/train'
     prune_kp: False
     num_pts: 2000
     batch_size: 8
@@ -44,7 +44,7 @@ no_cuda: ['name1', 'name2']
 
 val_config:
   data_config_val:
-    data_path: '/home/kunbpc/data/kunb/megadepth_caps/train'
+    data_path: '/home/kunbpc/data/kunb/megadepth_caps_(copy)/train'
     prune_kp: False
     shuffle: True
     num_pts: 1024
