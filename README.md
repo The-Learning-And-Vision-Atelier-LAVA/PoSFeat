@@ -57,7 +57,7 @@ The visualization results includes the scoremap of keypoints (meaningless for de
 
 **(7) Some dependencies**
 
-We depend on the [path](https://path.readthedocs.io/en/latest/index.html) package to manage the paths in this repo, please follow the [introduction](https://github.com/mahanmarwat/path) to install it. Users may be familiar with other dependencies, you can simply use `pip` and `conda` to install dependencies.
+We depend on the [path](https://path.readthedocs.io/en/latest/index.html) package to manage the paths in this repo, please follow the [readme on github](https://github.com/jaraco/path) or [introduction on PyPI](https://pypi.org/project/path/) to install it. Users may be familiar with other dependencies, you can simply use `pip` and `conda` to install dependencies.
 
 ## Evaluation
 **(1) Feature extraction**
