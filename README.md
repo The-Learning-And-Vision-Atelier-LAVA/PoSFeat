@@ -3,7 +3,7 @@ This is the official implementation of **PoSFeat** (CVPR2022), a weakly supervis
 
 **Decoupling Makes Weakly Supervised Local Feature Better** <br>
 [Kunhong Li](https://scholar.google.co.uk/citations?user=_kzDdx8AAAAJ&hl=zh-CN&oi=ao), [Longguang Wang](https://longguangwang.github.io/), [Li Liu](http://lilyliliu.com/Default.aspx), [Qing Ran](https://scholar.google.co.uk/citations?user=6ydy5oEAAAAJ&hl=zh-CN&oi=ao), [Kai Xu](http://kevinkaixu.net/index.html), [Yulan Guo* ](http://yulanguo.me/)<br>
-**[Paper] [[Arxiv](https://arxiv.org/abs/2201.02861)] [[Blog](https://zhuanlan.zhihu.com/p/477818450)] [[Bilibili](https://www.bilibili.com/video/BV1xg411R7wD?spm_id_from=333.337.search-card.all.click)] [[Youtube](https://www.youtube.com/watch?v=VnjdkAOIndc)]** 
+**[[Paper](https://openaccess.thecvf.com/content/CVPR2022/html/Li_Decoupling_Makes_Weakly_Supervised_Local_Feature_Better_CVPR_2022_paper.html)] [[Arxiv](https://arxiv.org/abs/2201.02861)] [[Blog](https://zhuanlan.zhihu.com/p/477818450)] [[Bilibili](https://www.bilibili.com/video/BV1xg411R7wD?spm_id_from=333.337.search-card.all.click)] [[Youtube](https://www.youtube.com/watch?v=VnjdkAOIndc)]** 
 
 ## Overview
 We decoupled the description net training and detection net training, and postpone the detection net training. This simple but effective framework allows us to detect robust keypoints based on the optimized descriptors.

@@ -464,9 +464,6 @@ def nms(score, patch_radius):
     return mask
 
 
-    # print(mask.view(score.shape[0],-1).sum(1))
-    return mask
-
 def gumbel_noise(shape, eps=1e-20):
     U = torch.rand(shape)
     U = U.cuda()
