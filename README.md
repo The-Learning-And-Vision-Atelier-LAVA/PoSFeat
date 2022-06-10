@@ -197,6 +197,8 @@ If you use this code in your project, please cite the following paper
     title={Decoupling Makes Weakly Supervised Local Feature Better},
     author={Li, Kunhong and Wang, Longguang and Liu, Li and Ran, Qing and Xu, Kai and Guo, Yulan},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-    year = {2022},
+    month     = {June},
+    year      = {2022},
+    pages     = {15838-15848}
 }
 ```
