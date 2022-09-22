@@ -58,11 +58,13 @@ python train.py --config ./configs/train_kp.yaml
 ```
 
 **(4) The difference between the results trained with this code repo and in the paper**
+
 论文里我们用的`SGD`优化器和`lr=1e-3`，这各仓库中是`Adam`和`lr=1e-4`。注意`Adam`在`lr=1e-3`时可能无法收敛。
 
 In the paper, we use `SGD` optimizer with `lr=1e-3` to train the model, and here is the `Adam` with `lr=1e-4`. Note that, Adam with lr=1e-3 may not achieve convergence.
 
 **(5) Multi-GPU training**
+
 我们使用pytorch的`DistributedDataParallel` API来实现单机多卡训练，但不知道为啥特别慢，所以都是禁掉了多GPU的。如果你实在需要多GPU训练，可能得自己修改一下代码，使用`DataParallel` API。
 
 In this code repo, we use the `DistributedDataParallel` API of pytorch to achieve multi-GPU training, which is slow because of unknown reason. If you really need multi-gpu training, please modify the codes to use `DataParallel` API.
