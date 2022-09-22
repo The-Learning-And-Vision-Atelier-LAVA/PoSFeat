@@ -21,7 +21,7 @@ Down the preprocessed subset of MegaDepth from [CAPS](https://github.com/qianqia
 
 开始训练描述子网络之前，首先按照你自己的训练集路径去修改[config/train_desc.yaml](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/configs/train_desc.yaml)中`data_config_train`里的`data_path`。
 
-因为某些原因（具体我也不知道为啥QAQ），我们现在使用的多卡训练及其慢，因此要先在终端设置单一GPU可见
+因为某些原因（具体我也不知道为啥QAQ），我们现在使用的多卡训练极其慢，因此要先在终端设置单一GPU可见
 
 To start the description net training, please mannuly modify the `data_path` of `data_config_train` in [config/train_desc.yaml](https://github.com/The-Learning-And-Vision-Atelier-LAVA/PoSFeat/blob/main/configs/train_desc.yaml). 
 
@@ -71,7 +71,7 @@ In this code repo, we use the `DistributedDataParallel` API of pytorch to achiev
 
 **(6) Visualization during training**
 
-我们提供了可视化工具来监控训练进程，尤其是关键点检测训练的过程，损失函数的值是无法作为参考的，因此需要通过关键点得分图的情况来判断是否需要停止训练。可视化的结果包括了关键点的粪土，关键点和原始匹配，所有结果都会存在checkpoint的路径中。注意在训练描述子时，可视化用到的关键点时sift（这个时候关键点检测网络还没训呢）。匹配用不同颜色代表了匹配的正确程度（绿色最优），但这个评价是依赖对极几何完成的，不一定完全正确。
+我们提供了可视化工具来监控训练进程，尤其是关键点检测训练的过程，损失函数的值是无法作为参考的，因此需要通过关键点得分图的情况来判断是否需要停止训练。可视化的结果包括了关键点得分图，关键点和原始匹配，所有结果都会存在checkpoint的路径中。注意在训练描述子时，可视化用到的关键点时sift（这个时候关键点检测网络还没训呢）。匹配用不同颜色代表了匹配的正确程度（绿色最优），但这个评价是依赖对极几何完成的，不一定完全正确。
 
 We also provide a visualization tool to give an intuition about the model performance during training. The results (including the heatmap, keypoints and raw matches) will be saved in the checkpoint path.
 The visualization results includes the scoremap of keypoints (meaningless for description net training), the keypoints (sift for description net training) and matches (we color the match line with epipolar constraint).
