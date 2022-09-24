@@ -695,7 +695,10 @@ class MegaDepth_Depth(Dataset):
         # remove pairs that have a relative rotation angle larger than 80 degrees
         theta = np.arccos(np.clip((np.trace(R) - 1) / 2, -1, 1)) * 180 / np.pi
         if theta > self.configs['rot_thr'] and self.is_train:
-            return None
+            item += 1
+            if item >= self.__len__():
+                item =0
+            return self.__getitem__(item)
 
         T = relative[:3, 3]
         tx = data_utils.skew(T)
@@ -721,24 +724,36 @@ class MegaDepth_Depth(Dataset):
 
         # if no keypoints are detected
         if len(coord1) == 0 or len(coord2) == 0:
-            return None
+            item += 1
+            if item >= self.__len__():
+                item =0
+            return self.__getitem__(item)
 
         # prune query keypoints that are not likely to have correspondence in the other image
         if self.configs['prune_kp']:
             ind_intersect = data_utils.prune_kpts(coord1[:,:2], F_gt, im2.shape[:2], intrinsic1, intrinsic2,
                                                   relative, d_min=4, d_max=400)
             if np.sum(ind_intersect) == 0:
-                return None
+                item += 1
+                if item >= self.__len__():
+                    item =0
+                return self.__getitem__(item)
             coord1 = coord1[ind_intersect]
 
             ind_intersect2 = data_utils.prune_kpts(coord2[:,:2], F_gt2, im1.shape[:2], intrinsic2, intrinsic1,
                                                   relative2, d_min=4, d_max=400)
             if np.sum(ind_intersect2) == 0:
-                return None
+                item += 1
+                if item >= self.__len__():
+                    item =0
+                return self.__getitem__(item)
             coord2 = coord2[ind_intersect2]
 
         if len(coord1) < self.configs['num_pts'] or len(coord2) < self.configs['num_pts']:
-            return None
+            item += 1
+            if item >= self.__len__():
+                item =0
+            return self.__getitem__(item)
 
         coord1 = data_utils.random_choice(coord1, self.configs['num_pts'])
         coord1 = torch.from_numpy(coord1).float()
